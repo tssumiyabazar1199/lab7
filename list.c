@@ -1,5 +1,6 @@
 #include "DS.h"
 
+/* p-ийн зааж буй List-д x утгыг төгсгөлд хийнэ */
 void l_push_back(List *p, int x)
 {
         Elm *new_node = (Elm *)malloc(sizeof(Elm));
@@ -16,6 +17,9 @@ void l_push_back(List *p, int x)
         p->len++;
 }
 
+/* p-ийн зааж буй List-д x утгыг эхэнд хийнэ
+   Бүх элементүүд нэг нэг байрлал хойшилно.
+ */
 void l_push_front(List *p, int x)
 {
         Elm *new_node = (Elm *)malloc(sizeof(Elm));
@@ -30,6 +34,11 @@ void l_push_front(List *p, int x)
         p->len++;
 }
 
+/*
+  p-ийн зааж буй List-д x утгыг pos байрлалд хийнэ
+  pos болон түүнээс хойшхи элементүүд нэг байрлал ухарна.
+  Тухайн байрлал List-ийн сүүлийн индексээс их бол төгсгөлд орно.
+ */
 void l_insert(List *p, int x, int pos)
 {
         if (pos <= 0 || p->head == NULL) {
@@ -55,6 +64,10 @@ void l_insert(List *p, int x, int pos)
         p->len++;
 }
 
+/*
+  p-ийн зааж буй List-н эхлэлээс гаргана.
+  List-ийн бүх элементүүд нэг нэг байрлал урагшилна
+ */
 void l_pop_front(List *p)
 {
         if (p == NULL || p->head == NULL) return;
@@ -67,6 +80,7 @@ void l_pop_front(List *p)
         p->len--;
 }
 
+/* p-ийн зааж буй List-н төгсгөлөөс гаргана */
 void l_pop_back(List *p)
 {
         if (p == NULL || p->head == NULL) return;
@@ -88,6 +102,10 @@ void l_pop_back(List *p)
         p->len--;
 }
 
+/* p-ийн зааж буй List-н pos байрлалаас гаргана.
+   pos болон түүнээс хойшхи элементүүд нэг байрлал урагшилна.
+   pos байрлалаас гарах боломжгүй бол юу ч хийхгүй.
+ */
 void l_erase(List *p, int pos)
 {
         if (p == NULL || pos < 0 || pos >= p->len) return;
@@ -111,6 +129,11 @@ void l_erase(List *p, int pos)
         p->len--;
 }
 
+/*
+  p-ийн зааж буй List-н утгуудыг хэвлэнэ.
+  Хамгийн эхний элементээс эхлэн дарааллаар, нэг мөрөнд
+  нэг л элемент хэвлэнэ.
+ */
 void l_print(List *p)
 {
         if (p == NULL) return;
@@ -121,6 +144,10 @@ void l_print(List *p)
         }
 }
 
+/*
+  p-ийн зааж буй List-с x тоог хайн олдсон хаягийг буцаана.
+  Олдохгүй бол NULL хаяг буцаана.
+ */
 Elm *l_search(List *p, int x)
 {
         if (p == NULL) return NULL;
@@ -132,7 +159,4 @@ Elm *l_search(List *p, int x)
                 curr = curr->next;
         }
         return NULL;
-
-        //aaaaaaaaa//
-
 }
