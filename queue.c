@@ -1,6 +1,5 @@
 #include "DS.h"
 
-/* p-ийн зааж буй Queue-д x утгыг хийнэ */
 void q_push(Queue *p, int x)
 {
         Elm *new_node = (Elm *)malloc(sizeof(Elm));
@@ -17,7 +16,6 @@ void q_push(Queue *p, int x)
         p->len++;
 }
 
-/* p-ийн зааж буй Queue-с гаргана */
 void q_pop(Queue *p)
 {
         if (p == NULL || p->head == NULL) return;
@@ -30,11 +28,7 @@ void q_pop(Queue *p)
         p->len--;
 }
 
-/*
-  p-ийн зааж буй Queue-н утгуудыг хэвлэнэ.
-  Хамгийн эхний элементээс эхлэн дарааллаар, нэг мөрөнд
-  нэг л элемент хэвлэнэ.
- */
+
 void q_print(Queue *p)
 {
         if (p == NULL) return;
