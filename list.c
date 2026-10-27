@@ -5,7 +5,7 @@ void l_push_back(List *p, int x)
         Elm *new_node = (Elm *)malloc(sizeof(Elm));
         if (new_node == NULL) return;
         new_node->x = x;
-        new_node->next = NULL; 
+        new_node->next = NULL;
 
         if (p->tail == NULL) {
                 p->head = p->tail = new_node;
@@ -21,7 +21,7 @@ void l_push_front(List *p, int x)
         Elm *new_node = (Elm *)malloc(sizeof(Elm));
         if (new_node == NULL) return;
         new_node->x = x;
-        new_node->next = p->head; 
+        new_node->next = p->head;
         p->head = new_node;
 
         if (p->tail == NULL) {
@@ -63,7 +63,7 @@ void l_pop_front(List *p)
         if (p->head == NULL) {
                 p->tail = NULL;
         }
-        free(temp); 
+        free(temp);
         p->len--;
 }
 
@@ -84,7 +84,7 @@ void l_pop_back(List *p)
 
         free(p->tail);
         p->tail = curr;
-        p->tail->next = NULL; 
+        p->tail->next = NULL;
         p->len--;
 }
 
@@ -95,7 +95,7 @@ void l_erase(List *p, int pos)
                 l_pop_front(p);
                 return;
         }
-        if (pos == p->len - 1) { 
+        if (pos == p->len - 1) {
                 l_pop_back(p);
                 return;
         }
