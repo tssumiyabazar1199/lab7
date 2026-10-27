@@ -1,69 +1,132 @@
 #include "DS.h"
 
-/* p-ийн зааж буй List-д x утгыг төгсгөлд хийнэ */
 void l_push_back(List *p, int x)
 {
-	/* Энд оруулах үйлдлийг хийнэ үү */
+        Elm *new_node = (Elm *)malloc(sizeof(Elm));
+        if (new_node == NULL) return;
+        new_node->x = x;
+
+        if (p->tail == NULL) {
+                p->head = p->tail = new_node;
+        } else {
+                p->tail->next = new_node;
+                p->tail = new_node;
+        }
+        p->len++;
 }
 
-/* p-ийн зааж буй List-д x утгыг эхэнд хийнэ
-   Бүх элементүүд нэг нэг байрлал хойшилно.
- */
 void l_push_front(List *p, int x)
 {
-	/* Энд оруулах үйлдлийг хийнэ үү */
+        Elm *new_node = (Elm *)malloc(sizeof(Elm));
+        if (new_node == NULL) return;
+        new_node->x = x;
+        new_node->next = NULL; 
+        p->head = new_node;
+
+        if (p->tail == NULL) {
+                p->tail = new_node;
+        }
+        p->len++;
 }
 
-/*
-  p-ийн зааж буй List-д x утгыг pos байрлалд хийнэ
-  pos болон түүнээс хойшхи элементүүд нэг байрлал ухарна.
-  Тухайн байрлал List-ийн сүүлийн индексээс их бол төгсгөлд орно.
- */
 void l_insert(List *p, int x, int pos)
 {
-	/* Энд оруулах үйлдлийг хийнэ үү */
+        if (pos <= 0 || p->head == NULL) {
+                l_push_front(p, x);
+                return;
+        }
+        if (pos >= p->len) {
+                l_push_back(p, x);
+                return;
+        }
+
+        Elm *new_node = (Elm *)malloc(sizeof(Elm));
+        if (new_node == NULL) return;
+        new_node->x = x;
+
+        Elm *curr = p->head;
+        for (int i = 0; i < pos - 1; i++) {
+                curr = curr->next;
+        }
+
+        new_node->next = curr->next;
+        curr->next = new_node;
+        p->len++;
 }
 
-
-/*
-  p-ийн зааж буй List-н эхлэлээс гаргана.
-  List-ийн бүх элементүүд нэг нэг байрлал урагшилна
- */
 void l_pop_front(List *p)
 {
-	/* Энд гаргах үйлдлийг хийнэ үү */
+        if (p == NULL || p->head == NULL) return;
+        Elm *temp = p->head;
+        p->head = p->head->next;
+        if (p->head == NULL) {
+                p->tail = NULL;
+        }
+        p->len--;
 }
 
-/* p-ийн зааж буй List-н төгсгөлөөс гаргана */
 void l_pop_back(List *p)
 {
-	/* Энд гаргах үйлдлийг хийнэ үү */
+        if (p == NULL || p->head == NULL) return;
+        if (p->head == p->tail) {
+                free(p->head);
+                p->head = p->tail = NULL;
+                p->len = 0;
+                return;
+        }
+
+        Elm *curr = p->head;
+        while (curr->next != p->tail) {
+                curr = curr->next;
+        }
+
+        free(p->tail);
+        p->tail = curr;
+        p->len--;
 }
 
-/* p-ийн зааж буй List-н pos байрлалаас гаргана.
-   pos болон түүнээс хойшхи элементүүд нэг байрлал урагшилна.
-   pos байрлалаас гарах боломжгүй бол юу ч хийхгүй.
- */
 void l_erase(List *p, int pos)
 {
-	/* Энд гаргах үйлдлийг хийнэ үү */
+        if (p == NULL || pos < 0 || pos >= p->len) return;
+        if (pos == 0) {
+                l_pop_front(p);
+                return;
+        }
+        if (pos == pos == p->len - 1) {
+                l_pop_back(p);
+                return;
+        }
+
+        Elm *curr = p->head;
+        for (int i = 0; i < pos - 1; i++) {
+                curr = curr->next;
+        }
+
+        Elm *temp = curr->next;
+        curr->next = temp->next;
+        free(temp);
+        p->len--;
 }
 
-/*
-  p-ийн зааж буй List-н утгуудыг хэвлэнэ.
-  Хамгийн эхний элементээс эхлэн дарааллаар, нэг мөрөнд
-  нэг л элемент хэвлэнэ.
- */
 void l_print(List *p)
 {
-        /* Энд хэвлэх үйлдлийг хийнэ үү */
+        if (p == NULL) return;
+        Elm *curr = p->head;
+        while (curr != NULL) {
+                printf("%d\n", curr->x);
+                curr = curr->next;
+        }
 }
 
-/*
-  p-ийн зааж буй List-с x тоог хайн олдсон хаягийг буцаана.
-  Олдохгүй бол NULL хаяг буцаана.
- */
 Elm *l_search(List *p, int x)
 {
-	
+        if (p == NULL) return NULL;
+        Elm *curr = p->head;
+        while (curr != NULL) {
+                if (curr->x == x) {
+                        return curr->x; 
+                }
+                curr = curr->next;
+        }
+        return NULL;
 }
